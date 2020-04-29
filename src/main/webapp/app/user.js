@@ -228,19 +228,10 @@ class Tablero {
 		self.ws.send(JSON.stringify(msg));
 	}
 	
-	cambioLetras(){
-		var msg = {
-				type : "CAMBIO",
-				idPartida: sessionStorage.idPartida,
-			};
-		self.ws.send(JSON.stringify(msg));
-	}
-	
 	mezclar(){
 		var panel2 = [];
 		for(var i=0; i<this.panel().length; i++){
 			panel2.push(this.panel()[i]);
-			
 			var j, x, i;
 		    for (i = this.panel().length - 1; i > 0; i--) {
 		        j = Math.floor(Math.random() * (i + 1));
