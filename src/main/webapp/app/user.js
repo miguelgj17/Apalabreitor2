@@ -59,6 +59,8 @@ function UserViewModel() {
 				var r = (jso.turno ? "Tienes " : "No tienes ") +
 					"el turno. Tus letras son: " + jso.letras;
 				
+				$("#mezcla").attr("disabled", !jso.turno);
+				
 				//Show Tablero and Hide Reg and Log forms
 				self.shouldShowRegLog(false);
 				self.shouldShowTablero(true);
