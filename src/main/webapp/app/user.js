@@ -235,6 +235,7 @@ class Tablero {
 		for(var i=0; i<this.panel().length; i++){
 			panel2.push(this.panel()[i]);
 			var j, x, i;
+			
 		    for (i = this.panel().length - 1; i > 0; i--) {
 		        j = Math.floor(Math.random() * (i + 1));
 		        x = panel2[i];
