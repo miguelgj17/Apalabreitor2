@@ -1,0 +1,17 @@
+.formulario {
+	background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3) 0%,
+		rgba(220, 220, 220, 0.5) 75%, #FFFFFF 100%), url("../img/background.jpg");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-size: cover;
+}
+
+h5{
+	color: #ffffff;
+	font-size: 2vw;
+}
+
+form label{
+	color: #ffffff;
+}

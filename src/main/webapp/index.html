@@ -8,11 +8,41 @@
 	<!-- Tablero CSS -->
     <link rel="stylesheet" type="text/css" href="css/tablero.css">
 	<link rel="stylesheet" type="text/css" href="css/login.css">
+
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-	<div class="row" data-bind="visible : shouldShowTablero">
+	<div class="row fila-tablero" data-bind="visible : shouldShowTablero">
+		
+		<div class="col-sm-4">
+		
+		<!-- ko using : tablero -->
+			Panel:
+			<!-- ko foreach : panel -->
+			<button data-bind="html : $data, click : function() { $parent.seleccionar($data); }"></button>
+			<!-- /ko -->
+			<br>
+<!-- 			<button data-bind="click : jugar">Jugar</button> -->
+		
+		
+		<div class="row">
+			<div class="col-12">
+				<div class="buttons-wrapper botones-juego">
+					<ul class="lista-botones">
+						<li><button type="button" id="jugar" class="btn btn-primary" data-bind="click : jugar">Jugar</button></li>
+						<li><button type="button" id="pasar" class="btn btn-primary" data-bind="click : pasar">Pasar</button></li>
+						<li><button type="button" id="mezclar" class="btn btn-primary" data-bind="click : mezclar">Mezclar</button></li>
+						 
+						 
+					</ul>
+				</div>
+			</div>
+			
+		
+		
+		</div>
+		</div>
 		<div class="col-sm-8">
 			<table id="board" class="scrabble-table mdl-shadow--24dp" width="100%">
 				<tbody>
@@ -31,16 +61,6 @@
 					<!-- /ko -->
 				</tbody>
 			</table>	
-		</div>
-		<div class="col-sm-4">
-		<!-- ko using : tablero -->
-			Panel:
-			<!-- ko foreach : panel -->
-			<button data-bind="html : $data, click : function() { $parent.seleccionar($data); }"></button>
-			<!-- /ko -->
-			<br>
-			<button data-bind="click : jugar">Jugar</button>
-		<!-- /ko -->
 		</div>
 	</div>
 
@@ -109,6 +129,12 @@
 			</div>
 		</div>
 	</div>
+
+	
+
+
+
+
 	<script src="https://knockoutjs.com/downloads/knockout-3.5.0.js"></script>
 	<script src="app/user.js"></script>
 </body>

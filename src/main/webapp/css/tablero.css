@@ -9,8 +9,8 @@
     border: 8px solid rgba(0,0,0,0.6);
     background-clip: content-box;
     background-color: #FAFAFA;
-    min-width: 400px;
-    min-height: 400px;
+    width: auto;
+    height: auto;
 }
 
 .scrabble-td {
@@ -47,4 +47,21 @@
 
 .star {
   background-color: grey;
+}
+
+.fila-tablero{
+	background: url(../img/bg-tablero.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+}
+
+.lista-botones{
+	padding-top: 1vw;
+}
+
+.lista-botones li{
+	display: inline;
+	
 }
