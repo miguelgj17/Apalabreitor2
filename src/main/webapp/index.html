@@ -24,17 +24,17 @@
 			<!-- /ko -->
 			<br>
 <!-- 			<button data-bind="click : jugar">Jugar</button> -->
-		
+		<!-- /ko -->
 		
 		<div class="row">
 			<div class="col-12">
 				<div class="buttons-wrapper botones-juego">
 					<ul class="lista-botones">
+					<!-- ko using : tablero -->
 						<li><button type="button" id="jugar" class="btn btn-primary" data-bind="click : jugar">Jugar</button></li>
 						<li><button type="button" id="pasar" class="btn btn-primary" data-bind="click : pasar">Pasar</button></li>
 						<li><button type="button" id="mezclar" class="btn btn-primary" data-bind="click : mezclar">Mezclar</button></li>
-						 
-						 
+					<!-- /ko -->	 	 
 					</ul>
 				</div>
 			</div>
@@ -108,7 +108,6 @@
 			<!-- LOGIN COLUMN -->
 			<div class="col-4" id="divLogin">
 			<h5>Login form</h5>
-				<form>
   					<div class="form-group">
     					<label for="exampleInputEmail1">Email or username</label>
     					<input type="text" class="form-control" id="loginUserName" data-bind="value : email" placeholder="Enter email">
@@ -118,14 +117,14 @@
     					<input type="password" class="form-control" data-bind="value : pwd" placeholder="Password">
   					</div>
   					<div class="form-group">
-  						<button type="submit" class="btn btn-primary" data-bind="click : login">Login</button>
-  						<button type="submit" class="btn btn-primary" data-bind="click : getUsers">Recuperar usuario</button>
+  						<button class="btn btn-primary" data-bind="click : login">Login</button>
+  						<button class="btn btn-primary" data-bind="click : getUsers">Recuperar usuario</button>
   					</div>
   					<div class="form-group">
-  						<button type="submit" class="btn btn-info" data-bind="click : nuevaPartida">Nueva partida</button>
-  						<button type="submit" class="btn btn-info" data-bind="click : unirAPartida">Unirme a partida</button>
+  						<button class="btn btn-info" data-bind="click : nuevaPartida">Nueva partida</button>
+  						<button class="btn btn-info" data-bind="click : unirAPartida">Unirme a partida</button>
   					</div>
-				</form>
+  					<button data-bind="click : saludar">Saludar</button>
 			</div>
 		</div>
 	</div>

@@ -11,7 +11,96 @@ public class ResultadoJugada {
 	private List<Cadena> valid;
 	private List<Cadena> invalid;
 	private List<String> exceptions;
+	private Board board;
+	private String letrasNuevas, letrasCambiadas;
+	private boolean cambio, turno, partidaTerminada;
+	private String ganador, perdedor;
+	private User jugador;
 	
+	public Board getBoard() {
+		return board;
+	}
+
+	public void setBoard(Board board) {
+		this.board = board;
+	}
+
+	public String getLetrasNuevas() {
+		return letrasNuevas;
+	}
+
+	public void setLetrasNuevas(String letrasNuevas) {
+		this.letrasNuevas = letrasNuevas;
+	}
+
+	public String getLetrasCambiadas() {
+		return letrasCambiadas;
+	}
+
+	public void setLetrasCambiadas(String letrasCambiadas) {
+		this.letrasCambiadas = letrasCambiadas;
+	}
+
+	public boolean isCambio() {
+		return cambio;
+	}
+
+	public void setCambio(boolean cambio) {
+		this.cambio = cambio;
+	}
+
+	public boolean isTurno() {
+		return turno;
+	}
+
+	public void setTurno(boolean turno) {
+		this.turno = turno;
+	}
+
+	public boolean isPartidaTerminada() {
+		return partidaTerminada;
+	}
+
+	public void setPartidaTerminada(boolean partidaTerminada) {
+		this.partidaTerminada = partidaTerminada;
+	}
+
+	public String getGanador() {
+		return ganador;
+	}
+
+	public void setGanador(String ganador) {
+		this.ganador = ganador;
+	}
+
+	public String getPerdedor() {
+		return perdedor;
+	}
+
+	public void setPerdedor(String perdedor) {
+		this.perdedor = perdedor;
+	}
+
+	public User getJugador() {
+		return jugador;
+	}
+
+	public void setJugador(User jugador) {
+		this.jugador = jugador;
+	}
+
+	public void setValid(List<Cadena> valid) {
+		this.valid = valid;
+	}
+
+	public void setInvalid(List<Cadena> invalid) {
+		this.invalid = invalid;
+	}
+
+	public void setExceptions(List<String> exceptions) {
+		this.exceptions = exceptions;
+	}
+
 	public ResultadoJugada() {
 		this.valid=new ArrayList<>();
 		this.invalid = new ArrayList<>();
@@ -80,6 +169,16 @@ public class ResultadoJugada {
 		return this.invalid;
 	}
 	
+	public int getPuntos() {
+		int r=0;
+		for (Cadena cadena : valid) r+=cadena.getPoints();
+		return r;
+	}
+	
+	public void ocultarLetras() {
+		this.letrasNuevas="";
+	}
+	
 	@Override
 	public String toString() {
 		return "Válidas: " + valid.toString() + "\nInválidas: " + invalid.toString() + "\nPoints: " + this.getPoints();
@@ -100,6 +199,19 @@ public class ResultadoJugada {
 			jsaExceptions.put(ex);
 		jso.put("exceptions", jsaExceptions);
 		jso.put("type", "resultado");
+		jso.put("partidaTerminada", this.partidaTerminada);
+		jso.put("ganador", this.ganador);
+		jso.put("perdedor", this.perdedor);
+		jso.put("cambio", this.cambio);
+		jso.put("letrasCambiadas", this.letrasCambiadas);
+		
+		if (board!=null)
+			jso.put("board", this.board.toString());
+		jso.put("turno",this.turno);
+		jso.put("letrasNuevas", this.letrasNuevas);
+		if(jugador!=null)
+			jso.put("nombre", this.jugador.getUserName());
+		jso.put("puntos", this.getPoints());
 		return jso;
 	}
 }

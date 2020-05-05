@@ -16,6 +16,10 @@ function UserViewModel() {
 	//Textarea for logs
 	this.message = ko.observable();
 	
+	this.saludar = function() {
+		alert("hiola");
+	}
+	
 	this.nuevaPartida = function() {
 		var info = {
 			action : "Nueva partida"
@@ -58,6 +62,11 @@ function UserViewModel() {
 			if (jso.type == "START") {
 				var r = (jso.turno ? "Tienes " : "No tienes ") +
 					"el turno. Tus letras son: " + jso.letras;
+				
+				$("#jugar").attr("disabled", !jso.turno);
+				$("#pasar").attr("disabled", !jso.turno);		
+				$("#mezclar").attr("disabled", !jso.turno);
+				
 				
 				//Show Tablero and Hide Reg and Log forms
 				self.shouldShowRegLog(false);
@@ -230,7 +239,7 @@ class Tablero {
 	
 	mezclar(){
 		var panel2 = [];
-		for(var i=0; i<this.panel().length; i++){
+		for(var i=0; i<this.panel().length; i++)
 			panel2.push(this.panel()[i]);
 			var j, x, i;
 			
@@ -241,7 +250,7 @@ class Tablero {
 		        panel2[j] = x;
 		    }
 		    this.panel(panel2);
-		}
+		
 	}
 	
 	
