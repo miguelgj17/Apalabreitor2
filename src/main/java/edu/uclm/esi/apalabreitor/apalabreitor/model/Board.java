@@ -18,6 +18,7 @@ public class Board {
 	boolean centroOcupado = false;
 	private Random dado = new Random();
 	private PalabraRepository palabrasRepo;
+	private Randomizer randomizer;
 	static HashMap<Character, Integer> puntos = new HashMap<>(); 
 	
 	static {
@@ -30,9 +31,11 @@ public class Board {
 		puntos.put('X', 8); puntos.put('Y', 4); puntos.put('Z', 10);
 	}
 	
-	public Board() {
+	public Board(Randomizer randomizer) {
+		this.randomizer = randomizer;
 		this.palabrasRepo=Manager.get().getPalabrasRepo();
-		this.disorderLetters();
+		this.randomizer.disorderLetters(letters, puntos);
+		
 		for (int i=0; i<15; i++) 
 			for (int j=0; j<15; j++)
 				squares[i][j] = new Square();
@@ -67,27 +70,11 @@ public class Board {
 		return r.toString();
 	}
 	
-	private void addLetter(int amount, char c) {
-		this.letters.add(amount, c, puntos.get(c));
+	private void devolverLetter(char letra) {
+		this.letters.add(1, letra, puntos.get(letra));
 	}
 
-	private void disorderLetters() {		
-		addLetter(12, 'A'); addLetter(2, 'B'); addLetter(4, 'C'); addLetter(5, 'D');
-		addLetter(12, 'E'); addLetter(1, 'F'); addLetter(2, 'G'); addLetter(2, 'H');
-		addLetter(6, 'I');  addLetter(1, 'J');                    addLetter(4, 'L');
-		addLetter(2, 'M');  addLetter(5, 'N'); addLetter(1, 'Ñ'); addLetter(9, 'O');
-		addLetter(2, 'P');  addLetter(1, 'Q'); addLetter(5, 'R'); addLetter(6, 'S');
-		addLetter(4, 'T');  addLetter(5, 'U'); addLetter(1, 'V'); 
-		addLetter(1, 'X');  addLetter(1, 'Y'); addLetter(1, 'Z');		
-		
-		for (int i=0; i<300; i++) {
-			int posA = dado.nextInt(letters.size());
-			int posB = dado.nextInt(letters.size());
-			Letter letraPosA = letters.get(posA);
-			letters.set(posA, letters.get(posB));
-			letters.set(posB, letraPosA);
-		}
-	}
+	
 
 	public ResultadoJugada movement(List<JSONObject> jugada) {
 		List<Cadena> cadenas=new ArrayList<>();
@@ -118,9 +105,23 @@ public class Board {
 					resultado.addAccepted(cadena);
 			}
 		}
-		if (resultado.acceptsAll())
+		
+		if (resultado.acceptsAll()) {
 			confirmarJugada(cadenas);
+			String letrasNuevas = this.getLetters(Math.min(this.letters.size(), jugada.size()));
+			resultado.setLetrasNuevas(letrasNuevas);
+		}
+			
 		return resultado;
+	}
+	
+	void deshacer(List<JSONObject> jugada) throws JSONException {
+		int row, col;
+		for(JSONObject letra : jugada) {
+			row = letra.getInt("row");
+			col = letra.getInt("col");
+			this.squares[row][col].setLetter('\0');
+		}
 	}
 
 	private List<Cadena> construirCadenas(List<JSONObject> jugada, boolean enVertical) throws JSONException {
@@ -288,5 +289,15 @@ public class Board {
 		return cadena;
 	}
 
+	@Override
+	public String toString() {
+		String r="";
+		for (int i=0;i<squares.length;i++) {
+			for (int j=0; j<squares[i].length; j++) {
+				r+=squares[i][j].toString();
+			}
+		}
+		return r;
+	}
 
 }
