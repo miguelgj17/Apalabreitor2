@@ -6,15 +6,34 @@ function UserViewModel() {
 	this.email = ko.observable();
 	this.userName = ko.observable();
 	this.pwd = ko.observable();
+	this.turno = ko.observable();
+	this.turnoOponente = ko.observable();
+	this.turno = ko.observable("");
+	this.turnoOponente = ko.observable("");
+	this.playerA = ko.observable();
+	this.playerB = ko.observable();
+	this.puntuacion = ko.observable();
+	this.puntuacionB = ko.observable();
+	
+	
+	this.cambio = ko.observable();
+	this.ganador = ko.observable();
+	this.perdedor = ko.observable();
+	
 	
 	this.tablero = ko.observable(new Tablero(ko));
 		
 	//Controlling hide & show tablero and reg+login forms
 	this.shouldShowRegLog = ko.observable(true);
 	this.shouldShowTablero = ko.observable(false);
+	this.shouldShowWelcome = ko.observable(false);
+	this.shouldShowWinner= ko.observable(false);
+	this.shouldShowCambiarLetras = ko.observable(false);
 	
 	//Textarea for logs
 	this.message = ko.observable();
+	var pointsA=0;
+	var pointsB=0;
 	
 	this.saludar = function() {
 		alert("hiola");
@@ -66,6 +85,8 @@ function UserViewModel() {
 				$("#jugar").attr("disabled", !jso.turno);
 				$("#pasar").attr("disabled", !jso.turno);		
 				$("#mezclar").attr("disabled", !jso.turno);
+				$("#cambiar").atts("desabled", !jso.turno);
+				
 				
 				
 				//Show Tablero and Hide Reg and Log forms
@@ -77,6 +98,102 @@ function UserViewModel() {
 				//Initialize Tablero with letras
 				for (var i=0; i<jso.letras.length; i++)
 					self.tablero().panel.push(jso.letras[i]);
+				
+				var player1 = jso.nameA;
+				self.playerA(player1);
+				
+				var player2 = jso.nameB;
+				self.playerB(player2);
+				
+				self.puntuacion=("0");
+				self.puntuacionB=("0");
+				self.cambio=false;
+			}
+			
+			if(jso.type == "resultado"){
+				if(jso.nombre == self.playerA()){
+					pointsA += jso.puntos;
+					self.puntuacion(pointsA);
+				}else{
+					pointsB += jso.puntos;
+					self.puntuacionB(pointsB);
+				}
+			}
+			
+			if(jso.partidaTerminada){
+				self.message("PARTIDA TERMINADA WINNER: "+ jso.ganador);
+				self.ganador(jso.ganador);
+				self.perdedor(jso.perdedor);
+				self.shouldShowWinner(true);
+				self.shouldShowTablero(false);
+			}else{
+				if(!jso.cambio && jso.valid.length > 0){
+					recargar(jso.board)
+				}
+				
+				if(jso.cambio){
+					while(self.tablero().panel().length > 0)
+						self.tablero().panel.pop();
+					
+					for(var i=0; i<jso.letrasCambiadas.length; i++){
+						self.tablero().panel.push(jso.letrasCambiadas[i]);
+					}
+				}
+				
+				if(jso.turno){
+					if(pointsA>=30 || pointsB>=30){
+						self.tablero().rendirse();
+					}
+					
+					if(jso.exceptions.length>0 ||jso.invalid.length>0{
+						self.tablero().llamar();
+						recargar(jso.board);
+						self.tablero().casillasJugada.length=0;
+					}else if(jso.exceptions.length==0 && jso.invalid.length == 0){
+						$("#jugar").attr("disabled", !jso.turno);
+						$("#pasar").attr("disabled", !jso.turno);
+						$("#cambiar").attr("disabled", !jso.turno);
+						$("#mezclar").attr("disabled", !jso.turno);
+						$("#rendirse").attr("disabled", !jso.turno);
+					}
+				}else if(jso.exceptions.length==0 && jso.invalid.length == 0){
+					var puntos = parseInt(self.puntuacion()) + parseInt(jso.puntos);
+					
+					$("#jugar").attr("disabled", !jso.turno);
+					$("#pasar").attr("disabled", !jso.turno);
+					$("#cambiar").attr("disabled", !jso.turno);
+					$("#mezclar").attr("disabled", !jso.turno);
+					$("#rendirse").attr("disabled", !jso.turno);
+					
+					var auxiliar = 0;
+					while(auxiliar<self.tablero().casillasJugada.length){
+						self.tablero().panel.push(jso.letrasNuevas[auxiliar]);
+						auxiliar++;
+					}
+					self.tablero().casillasJugada.length=0;
+				}
+			}
+			
+		}
+	}
+	
+	function recargar(tablero){
+		if(tablero){
+			var contador = 0;
+			var letras = 0;
+			
+			for(var i=0; i<15; i++){
+				var fila = self.tablero().casillas()[i];
+				for(var j=0; j<15; j++){
+					var celda = fila[j];
+					
+					if(tablero[contador] != '-'){
+						celda.letter(tablero[contador])
+						celda.bloquear();
+						contador++;
+					}
+					contador++;
+				}
 			}
 		}
 	}
@@ -200,15 +317,17 @@ class Tablero {
 		if (this.casillaSeleccionada == null) {
 			alert("No has seleccionado la casilla");
 			return;
-		}
-		for (var i=0; i<this.panel().length; i++) {
-			if (this.panel()[i]==letra) {
-				this.panel.splice(i, 1);
-				this.casillaSeleccionada.letter(letra);
-				this.casillaSeleccionada=null;
-				break;
+		}else if(!this.casillaSeleccionada.definitiva){
+			for (var i=0; i<this.panel().length; i++) {
+				if (this.panel()[i]==letra) {
+					this.panel.splice(i, 1);
+					this.casillaSeleccionada.letter(letra);
+					this.casillaSeleccionada=null;
+					break;
+				}
 			}
 		}
+		
 	}
 	
 	jugar() {
@@ -250,23 +369,32 @@ class Tablero {
 		        panel2[j] = x;
 		    }
 		    this.panel(panel2);
-		
+	}
+	
+	cambiar(){
+		var msg = {
+				type : "CAMBIAR LETRAS",
+				idPartida: sessionStorage.idPartida
+		};
+		self.ws.send(JSON.stringify(msg));
 	}
 	
 	
 }
 
 class Casilla {
-	constructor(ko, tablero, row, column) {
+	constructor(ko, tablero, row, column, turno) {
 		this.tablero = tablero;
 		this.letter = ko.observable('');
 		this.clazz = ko.observable("scrabble-td");
 		this.row = row;
 		this.column = column;
+		this.turno= turno;
+		this.definitiva = false;
 	}
 	
 	seleccionar() {
-		if (this.letter()!='' && this.letter()!='★') {
+		if (this.letter()!='' && this.letter()!='★' && this.definitiva == false && this.letter()!='TL' && this.letter()!='TP' && this.letter()!='DL' && this.letter()!='DP') {
 			this.tablero.panel.push(this.letter());
 			this.letter('');
 			var pos = this.tablero.casillasJugada.indexOf(this);
@@ -275,6 +403,10 @@ class Casilla {
 		}
 		this.tablero.casillaSeleccionada = this;
 		this.tablero.casillasJugada.push(this);
+	}
+	
+	bloquear(){
+		this.definitiva = true;
 	}
 }
 
