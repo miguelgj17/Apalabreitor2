@@ -175,5 +175,32 @@ public class Match {
 		this.jugadorConElTurno = (this.playerA==this.jugadorConElTurno ? this.playerB : this.playerA);
 	}
 	
-	
+	public void cambiarLetras(String idSession) throws Exception {
+		ResultadoJugada resultado;
+		User jugador = this.playerA.getSession().getId().equals(idSession) ? playerA : playerB;
+		if(jugador!=this.jugadorConElTurno) {
+			resultado = new ResultadoJugada();
+			resultado.addException("No tienes el turno");
+			jugador.sendMessage(resultado);
+		}else {
+			resultado=new ResultadoJugada();
+			if(this.playerA.getSession().getId().equals(idSession)) {
+				for(int i = 0; i<lettersA.length(); i++) {
+					this.board.devolverLetter(lettersA.charAt(i));
+				}
+				this.lettersA=this.board.getLetters(7);
+				resultado.setLetrasCambiadas(this.lettersA);
+				resultado.setCambio(true);
+				resultado.setTurno(true);
+			} else {
+				for(int i = 0; i<lettersB.length(); i++) {
+					this.board.devolverLetter(lettersB.charAt(i));
+				}
+				this.lettersB=this.board.getLetters(7);
+				resultado.setLetrasCambiadas(this.lettersB);
+				resultado.setCambio(true);
+				resultado.setTurno(true);
+			}
+		}
+	}
 }

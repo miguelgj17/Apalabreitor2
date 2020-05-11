@@ -70,7 +70,7 @@ public class Board {
 		return r.toString();
 	}
 	
-	private void devolverLetter(char letra) {
+	void devolverLetter(char letra) {
 		this.letters.add(1, letra, puntos.get(letra));
 	}
 
@@ -110,6 +110,8 @@ public class Board {
 			confirmarJugada(cadenas);
 			String letrasNuevas = this.getLetters(Math.min(this.letters.size(), jugada.size()));
 			resultado.setLetrasNuevas(letrasNuevas);
+			
+			resultado.setBoard(this);
 		}
 			
 		return resultado;

@@ -39,4 +39,9 @@ public class Square {
 	public boolean isEmpty() {
 		return this.letter=='\0';
 	}
+	
+	@Override
+	public String toString() {
+		return letter=='\0' ? "-":""+letter;
+	}
 }
