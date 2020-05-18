@@ -25,7 +25,7 @@ public class Match {
 	
 	public Match() {
 		this.id = UUID.randomUUID().toString();
-		this.randomizer = new Randomizer(false); // FALSE para probar el juego
+		this.randomizer = new Randomizer(true); // FALSE para probar el juego
 	}
 
 	public void setPlayerA(User user) {
@@ -201,6 +201,7 @@ public class Match {
 				resultado.setCambio(true);
 				resultado.setTurno(true);
 			}
+			jugador.sendMessage(resultado);
 		}
 	}
 }

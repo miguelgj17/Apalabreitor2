@@ -173,7 +173,6 @@ function UserViewModel() {
 						self.tablero().casillasJugada.length=0;
 					}
 				}
-
 			}
 		}
 	}
@@ -352,7 +351,7 @@ class Tablero {
 	pasar(){
 		var msg = {
 			type : "PASO",
-			idPartida: sessionStorage.idPartida,
+			idPartida: sessionStorage.idPartida
 		};
 		self.ws.send(JSON.stringify(msg));
 	}

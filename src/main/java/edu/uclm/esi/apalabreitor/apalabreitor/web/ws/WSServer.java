@@ -40,9 +40,15 @@ public class WSServer extends TextWebSocketHandler {
 			match = WebController.inPlayMatches.get(idPartida);
 			match.playerPlays(session.getId(), jso.getJSONArray("casillas"));
 			break;
-		case "CAMBIO DE LETRAS" :
+		case "CAMBIAR LETRAS" :
+			idPartida = jso.getString("idPartida");
+			match = WebController.inPlayMatches.get(idPartida);
+			match.cambiarLetras(session.getId());
 			break;
-		case "PASO DE TURNO" :
+		case "PASO" :
+			idPartida = jso.getString("idPartida");
+			match = WebController.inPlayMatches.get(idPartida);
+			match.pasarTurno();
 			break;
 		case "ABANDONO" :
 			break;

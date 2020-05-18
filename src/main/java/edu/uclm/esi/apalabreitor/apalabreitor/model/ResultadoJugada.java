@@ -181,7 +181,7 @@ public class ResultadoJugada {
 	
 	@Override
 	public String toString() {
-		return "Válidas: " + valid.toString() + "\nInválidas: " + invalid.toString() + "\nPoints: " + this.getPoints();
+		return "Válidas: " + valid.toString() + "\nInválidas: " + invalid.toString() + "\nPoints: " + this.getPuntos();
 	}
 
 	public JSONObject toJSON() throws JSONException {
@@ -211,7 +211,7 @@ public class ResultadoJugada {
 		jso.put("letrasNuevas", this.letrasNuevas);
 		if(jugador!=null)
 			jso.put("nombre", this.jugador.getUserName());
-		jso.put("puntos", this.getPoints());
+		jso.put("puntos", this.getPuntos());
 		return jso;
 	}
 }
