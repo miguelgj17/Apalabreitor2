@@ -35,10 +35,6 @@ function UserViewModel() {
 	var puntosA=0;
 	var puntosB=0;
 	
-	this.saludar = function() {
-		alert("hiola");
-	}
-	
 	this.nuevaPartida = function() {
 		var info = {
 			action : "Nueva partida"
@@ -408,6 +404,33 @@ class Casilla {
 	bloquear(){
 		this.definitiva = true;
 	}
+}
+
+this.onSingIn = function(googleUser){
+	var profile = googleUser.getBasicProfile();
+	console.log('ID: ' + profile.getId());
+	console.log('Name: ' + profile.getName());
+	console.log('Image URL: ' + profile.getImageUrl());
+	console.log('Email: ' + profile.getEmail());
+	
+	$("#message").attr("style", "color:green");
+	self.message("LoginOK");
+	self.shouldShowRegLog(false);
+	self.shouldShowWelcome(true);
+	
+	var info = {
+		userName : profile.getName(),
+		email : profile.getEmail()
+	};
+	
+	var data = {
+			data : info,
+			url : "login2",
+			type : "post"
+	};
+	
+	$.ajax(data);
+	
 }
 
 var user = new UserViewModel();

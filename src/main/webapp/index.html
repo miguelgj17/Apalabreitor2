@@ -1,7 +1,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	
+	<meta name="google-signin-client_id" content="110860592933-dkhagcqeefao8r52jvl0m76kbfv5ldfj.apps.googleusercontent.com">
 	<!-- Bootstrap style -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	
@@ -11,6 +11,7 @@
 
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
 	<div class="row fila-tablero" data-bind="visible : shouldShowTablero">
@@ -150,7 +151,7 @@
   						<button class="btn btn-info" data-bind="click : nuevaPartida">Nueva partida</button>
   						<button class="btn btn-info" data-bind="click : unirAPartida">Unirme a partida</button>
   					</div>
-  					<button data-bind="click : saludar">Saludar</button>
+  					<div class="g-signin2" data-onsuccess="onSignIn"></div>
 			</div>
 		</div>
 	</div>
