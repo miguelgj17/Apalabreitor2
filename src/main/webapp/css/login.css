@@ -8,10 +8,41 @@
 }
 
 h5{
-	color: #ffffff;
-	font-size: 2vw;
+	color: #000000;
+	font-size: 3vw;
 }
 
 form label{
 	color: #ffffff;
+}
+
+#titulo {
+	font-family: LHF Bounce Script;
+	src: url(../fonts/LHF_Bounce_Script.ttf);
+}
+
+#tituloApp {
+	font-family: LHF Bounce Script;
+	src: url(../fonts/LHF_Bounce_Script.ttf);
+	font-size: 5vw;
+    padding-left: 2vw;
+}
+
+#divLogin {
+	border-left-style: solid;
+	border-left-width: 2px;
+	border-left-color: white;
+}
+
+@font-face{
+	font-family: "Stabillo";
+	src: url("../fonts/Stabillo Medium.ttf");
+}
+
+#boton_letra {
+	font-family: "Stabillo";
+	font-size: 25px;
+	background-color: #FAE291;
+	
+	
 }

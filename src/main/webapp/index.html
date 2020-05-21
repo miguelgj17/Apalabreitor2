@@ -19,9 +19,9 @@
 		<div class="col-sm-4">
 		
 		<!-- ko using : tablero -->
-			Panel:
+			Tus letras: 
 			<!-- ko foreach : panel -->
-			<button data-bind="html : $data, click : function() { $parent.seleccionar($data); }"></button>
+			<button id="boton_letra" class="btn-lg" data-bind="html : $data, click : function() { $parent.seleccionar($data); }"></button>
 			<!-- /ko -->
 			<br>
 <!-- 			<button data-bind="click : jugar">Jugar</button> -->
@@ -106,27 +106,37 @@
   						<textarea class="form-control" rows="2" id="message" data-bind="html : message" disabled></textarea>
 					</div>
 				</div>
-            </div>
+        </div>
+       
+        
 		<!-- ROW DE REGISTRO Y LOGIN -->
 		<div class="row" id="divreglogin" data-bind="visible: shouldShowRegLog">
+		
+		 <!-- ROW DE TITULO APALABRADOS -->
+        
+        <div class="row">
+        <h1 id="tituloApp">
+        	Bienvenido a Apalabreitor
+        </h1>
+        </div>
 			<!-- REGISTER COLUMN -->
 			<div class="col-8" id="divRegister">
-				<h5>Registration form</h5>
+				<h5 id="titulo">Formulario de Registro</h5>
 				<form>
   					<div class="form-group">
-    					<label for="exampleInputEmail1">Email address</label>
+    					<label for="exampleInputEmail1">Correo Electronico</label>
     					<input type="email" class="form-control" id="inputEmail" placeholder="Enter email">
   					</div>
   					<div class="form-group">
-    					<label for="exampleInputUsername">User's name</label>
+    					<label for="exampleInputUsername">Nombre de Usuario</label>
     					<input type="text" class="form-control" id="inputUserName" placeholder="Username">
   					</div>
   					<div class="form-group">
-    					<label for="exampleInputPassword1">Password</label>
+    					<label for="exampleInputPassword1">Contraseña</label>
     					<input type="password" class="form-control" id="inputPwd1" placeholder="Password">
   					</div>
   					<div class="form-group">
-    					<label for="exampleInputPassword2">Confirm Password</label>
+    					<label for="exampleInputPassword2">Confirmar contraseña</label>
     					<input type="password" class="form-control" id="inputPwd2" placeholder="Confirm Password">
   					</div>
   					<button data-bind="click : register" class="btn btn-primary">Register</button>
@@ -134,13 +144,13 @@
 			</div>
 			<!-- LOGIN COLUMN -->
 			<div class="col-4" id="divLogin">
-			<h5>Login form</h5>
+			<h5 id="titulo">Login</h5>
   					<div class="form-group">
-    					<label for="exampleInputEmail1">Email or username</label>
+    					<label for="exampleInputEmail1">Nombre de Usuario / Email</label>
     					<input type="text" class="form-control" id="loginUserName" data-bind="value : email" placeholder="Enter email">
   					</div>
   					<div class="form-group">
-    					<label for="exampleInputPassword1">Password</label>
+    					<label for="exampleInputPassword1">Contraseña</label>
     					<input type="password" class="form-control" data-bind="value : pwd" placeholder="Password">
   					</div>
   					<div class="form-group">
