@@ -375,6 +375,14 @@ class Tablero {
 		self.ws.send(JSON.stringify(msg));
 	}
 	
+	rendirse(){
+		var msg = {
+				type : "RENDIRSE",
+				idPartida: sessionStorage.idPartida
+		};
+		self.ws.send(JSON.stringify(msg));
+	}
+	
 	
 }
 

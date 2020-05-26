@@ -204,4 +204,16 @@ public class Match {
 			jugador.sendMessage(resultado);
 		}
 	}
+	
+	public void rendirse(String idSession) throws Exception {
+		ResultadoJugada resultado = new ResultadoJugada();
+		User perdedor = this.playerA.getSession().getId().equals(idSession) ? this.playerA : this.playerB;
+		resultado.setPartidaTerminada(true);
+		resultado.setPerdedor(perdedor.getUserName());
+		User ganador = this.playerA == perdedor ? playerB : playerA;
+		this.ganador = ganador;
+		resultado.setGanador(ganador.getUserName());
+		ganador.sendMessage(resultado);
+		perdedor.sendMessage(resultado);
+	}
 }
