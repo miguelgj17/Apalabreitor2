@@ -69,6 +69,7 @@ public class TestFuncional {
 		clickEnLetra(driverCarlos, 1);
 		pausa();
 		driverCarlos.findElement(By.id("jugar")).click();
+		pausa();
 		
 	} catch (Exception e) {
 		fail("Error inesperado");
