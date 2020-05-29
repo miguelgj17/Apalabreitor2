@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.Select;
 
 public class TestFuncional {
   private WebDriver driverCarlos;
-  private WebDriver driverAna;
+  private WebDriver driverMiguel;
   private String baseUrl;
   private boolean acceptNextAlert = true;
   private StringBuffer verificationErrors = new StringBuffer();
@@ -21,10 +21,10 @@ public class TestFuncional {
   public void setUp() throws Exception {
 	System.setProperty("webdriver.chrome.driver", "C:\\Users\\Miguel Angel\\Desktop\\Universidad\\TyS Web\\chromedriver.exe");
     driverCarlos = new ChromeDriver();
-    driverAna = new ChromeDriver();
+    driverMiguel = new ChromeDriver();
     baseUrl = "https://www.google.com/";
     driverCarlos.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-    driverAna.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    driverMiguel.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
   }
   
   @Test
@@ -35,9 +35,9 @@ public class TestFuncional {
 		driverCarlos.findElement(By.id("btnNuevaPartida")).click();
 	    
 		
-		login(this.driverAna, "miguel", "miguel");
+		login(this.driverMiguel, "miguel", "miguel");
 		pausa();
-		driverAna.findElement(By.id("btnUnirmeAPartida")).click();
+		driverMiguel.findElement(By.id("btnUnirmeAPartida")).click();
 		
 		pausa();
 		
@@ -52,6 +52,23 @@ public class TestFuncional {
 		
 		driverCarlos.findElement(By.id("jugar")).click();
 		
+		clickEn(driverMiguel, 9, 11);
+		clickEnLetra(driverMiguel, 2);
+		clickEn(driverMiguel, 10, 11);
+		clickEnLetra(driverMiguel, 2);
+		clickEn(driverMiguel, 11, 11);
+		clickEnLetra(driverMiguel, 2);
+		clickEn(driverMiguel, 12, 11);
+		clickEnLetra(driverMiguel, 2);
+		
+		driverMiguel.findElement(By.id("jugar")).click();
+		
+		clickEn(driverCarlos, 12, 12);
+		clickEnLetra(driverCarlos, 1);
+		clickEn(driverCarlos, 12, 13);
+		clickEnLetra(driverCarlos, 1);
+		pausa();
+		driverCarlos.findElement(By.id("jugar")).click();
 		
 	} catch (Exception e) {
 		fail("Error inesperado");
@@ -89,7 +106,7 @@ private void pausa() {
   @After
   public void tearDown() throws Exception {
    // driverCarlos.quit();
-    //driverAna.quit();
+    //driverMiguel.quit();
     String verificationErrorString = verificationErrors.toString();
     if (!"".equals(verificationErrorString)) {
       fail(verificationErrorString);
