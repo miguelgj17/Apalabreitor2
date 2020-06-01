@@ -12,7 +12,7 @@ function UserViewModel() {
 	this.turnoOponente = ko.observable("");
 	this.playerA = ko.observable();
 	this.playerB = ko.observable();
-	this.puntuacion = ko.observable();
+	this.puntuacionA = ko.observable();
 	this.puntuacionB = ko.observable();
 	
 	
@@ -101,7 +101,7 @@ function UserViewModel() {
 				var player2 = jso.nameB;
 				self.playerB(player2);
 
-				self.puntuacion("0");
+				self.puntuacionA("0");
 				self.puntuacionB("0");
 				self.cambio=false;
 			}
@@ -109,7 +109,7 @@ function UserViewModel() {
 			if(jso.type == "resultado"){
 				if(jso.nombre == self.playerA()){
 					puntosA += jso.puntos;
-					self.puntuacion(puntosA);
+					self.puntuacionA(puntosA);
 				}else{
 					puntosB += jso.puntos;
 					self.puntuacionB(puntosB);
@@ -153,7 +153,7 @@ function UserViewModel() {
 							$("#rendirse").attr("disabled", !jso.turno);
 						}
 					}else if(jso.exceptions.length==0 && jso.invalid.length == 0){
-						var puntos = parseInt(self.puntuacion()) + parseInt(jso.puntos);
+						var puntos = parseInt(self.puntuacionA()) + parseInt(jso.puntos);
 
 						$("#jugar").attr("disabled", !jso.turno);
 						$("#pasar").attr("disabled", !jso.turno);

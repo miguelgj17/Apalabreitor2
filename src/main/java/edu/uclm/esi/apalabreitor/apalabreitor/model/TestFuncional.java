@@ -30,12 +30,12 @@ public class TestFuncional {
   @Test
   public void testPartida() {
 	  try {
-		login(this.driverCarlos, "carlos", "carlos");
+		login(this.driverCarlos, "carlos1", "carlos1");
 		pausa();
 		driverCarlos.findElement(By.id("btnNuevaPartida")).click();
 	    
 		
-		login(this.driverMiguel, "miguel", "miguel");
+		login(this.driverMiguel, "miguel1", "miguel1");
 		pausa();
 		driverMiguel.findElement(By.id("btnUnirmeAPartida")).click();
 		

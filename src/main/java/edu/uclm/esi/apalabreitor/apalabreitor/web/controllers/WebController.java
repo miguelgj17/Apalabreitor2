@@ -109,6 +109,27 @@ public class WebController {
 		else throw new LoginException();
 	}
 	
+	@RequestMapping(value="/login2")
+	public void login2(HttpSession session,
+			@RequestParam(value="userName") String userName,
+			@RequestParam(value="Email") String Email) throws LoginException {
+		User user;
+		if(userRepo.findById(userName).isPresent()) {
+			user = userRepo.findById(userName).get();
+			session.setAttribute("user", user);
+			this.users.add(user);
+		} else {
+			User newUser = new User();
+			newUser.setEmail(Email);
+			newUser.setUserName(userName);
+			newUser.setPwd("TESTPWD");
+			userRepo.save(newUser);
+			newUser = userRepo.findById(userName).get();
+			session.setAttribute("user", newUser);
+			this.users.add(newUser);
+		}
+	}
+	
 	
 	@RequestMapping("/salir")
 	public void salir(HttpSession session) throws Exception {
