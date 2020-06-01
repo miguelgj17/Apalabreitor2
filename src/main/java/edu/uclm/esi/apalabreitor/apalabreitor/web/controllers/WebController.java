@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -83,9 +84,10 @@ public class WebController {
 		if (userRepo.findById(userName).isPresent() || userRepo.findByEmail(email)!=null)
 			throw new Exception("The user already exists");
 		User user=new User();
+		String pwdEncrypt = DigestUtils.md5Hex(pwd1);
 		user.setEmail(email);
 		user.setUserName(userName);
-		user.setPwd(pwd1);
+		user.setPwd(pwdEncrypt);
 		userRepo.save(user);
 	}
 	
@@ -95,11 +97,12 @@ public class WebController {
 			@RequestParam(value="pwd") String pwd,
 			@RequestParam boolean withEmail) throws LoginException {
 		User user;
+		String pwdEncrypt = DigestUtils.md5Hex(pwd);
 		if (withEmail)
 			user=userRepo.findByEmail(userName);
 		else
 			user=userRepo.findById(userName).get();
-		if (user!=null && user.getPwd().equals(pwd)) {
+		if (user!=null && user.getPwd().equals(pwdEncrypt)) {
 			session.setAttribute("user", user);
 			this.users.add(user);
 		}
