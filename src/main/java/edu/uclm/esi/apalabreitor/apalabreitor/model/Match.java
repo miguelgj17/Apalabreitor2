@@ -92,8 +92,8 @@ public class Match {
 			jsaA.put("type", "START");
 			jsaA.put("letras", this.lettersA);
 			jsaA.put("turno", jugadorConElTurno==playerA ? true : false);
-			jsaA.put("unameA", this.playerA.getUserName());
-			jsaA.put("unameB", this.playerB.getUserName());
+			jsaA.put("nameA", this.playerA.getUserName());
+			jsaA.put("nameB", this.playerB.getUserName());
 			jsaA.put("puntosA", this.puntosA);
 			jsaA.put("puntosB", this.puntosB);
 			this.playerA.sendMessage(jsaA.toString());
@@ -108,8 +108,8 @@ public class Match {
 			jsaB.put("type", "START");
 			jsaB.put("letras", this.lettersB);
 			jsaB.put("turno", jugadorConElTurno==playerB ? true : false);
-			jsaB.put("unameA", this.playerA.getUserName());
-			jsaB.put("unameB", this.playerB.getUserName());
+			jsaB.put("nameA", this.playerA.getUserName());
+			jsaB.put("nameB", this.playerB.getUserName());
 			jsaB.put("puntosA", this.puntosA);
 			jsaB.put("puntosB", this.puntosB);
 			this.playerB.sendMessage(jsaB.toString());
